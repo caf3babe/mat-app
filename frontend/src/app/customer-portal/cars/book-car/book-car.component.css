@@ -1,0 +1,34 @@
+.alignment{
+  padding-top: 3%;
+  padding-right: 1%;
+  width: 100%;
+}
+.header{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+button{
+  width: 32%;
+}
+table{
+  vertical-align: center;
+  horiz-align: center;
+  width: 80%;
+}
+
+td {
+  padding-right: 1%;
+}
+
+form{
+  padding-top: 2%;
+}
+
+.forminput{
+  margin-right: 2%;
+}
+
+.alignment-button{
+  float: right;
+}

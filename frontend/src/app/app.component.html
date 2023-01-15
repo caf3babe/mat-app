@@ -1,0 +1,35 @@
+<div class="topnav">
+  <mat-toolbar color="primary">
+    <div>
+      <a [routerLink]="'/#'">
+        <img src="./favicon.ico" height="90px" alt="company image" routerLink="">
+      </a>
+    </div>
+    <span class="example-spacer" ></span>
+    <a class="button-element" mat-button *ngIf="isAdmin" [routerLink]="'/admin-cars'">Car Administration</a>
+    <a class="button-element" mat-button *ngIf="isAdmin" [routerLink]="'/admin-order'">Order Administration</a>
+      <a mat-button (click)="openOrderDialog()">View Order</a>
+      <a mat-button (click)="openAdminDialog()">Admin</a>
+    <button mat-icon-button color="accent" title="Log Out" *ngIf="isAdmin" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+
+  </mat-toolbar>
+</div>
+<div class="banner-image">
+  <div class="banner-text">
+    <h1 class="title">We got the car you need</h1>
+    <button mat-raised-button color="accent" [routerLink]="''">Our services</button>
+  </div>
+</div>
+
+<mat-toolbar color="accent">
+  <span class="button-element"></span>
+  <a class="button-element" mat-button [routerLink]="'/services'">Services</a>
+  <a class="button-element" mat-button [routerLink]="'/cars'">Cars</a>
+  <a class="button-element" mat-button [routerLink]="'/locations'">Locations</a>
+  <span class="button-element"></span>
+</mat-toolbar>
+<div class="alignment">
+  <router-outlet></router-outlet>
+</div>
