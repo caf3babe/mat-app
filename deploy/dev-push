@@ -14,7 +14,7 @@ if [ ! -d "$APP" ]; then
   exit 1;
 fi
 
-TAG="gcr.io/car-rental-ui/car-rental-microservices-${APP}:latest"
+TAG="ghcr.io/caf3babe/mat-app-${APP}:latest"
 
 docker build -t "${TAG}" "${APP}"
 docker push "${TAG}"

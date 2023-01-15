@@ -1,11 +1,12 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/car-rental-ui/car-rental-microservices-discovery-service:latest
+  repository: ghcr.io/caf3babe/mat-app-configuration-service:main
   pullPolicy: Always
   tag: ""
 
-imagePullSecrets: []
+imagePullSecrets: 
+- name: dockerconfigjson-github-com
 nameOverride: ""
 fullnameOverride: ""
 
@@ -29,7 +30,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8070
+  port: 8071
 
 autoscaling:
   enabled: false

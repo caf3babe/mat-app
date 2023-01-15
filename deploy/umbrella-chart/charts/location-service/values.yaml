@@ -1,11 +1,12 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/car-rental-ui/car-rental-microservices-location-service:latest
+  repository: ghcr.io/caf3babe/mat-app-location-service:main
   pullPolicy: Always
   tag: ""
 
-imagePullSecrets: []
+imagePullSecrets: 
+- name: dockerconfigjson-github-com
 nameOverride: ""
 fullnameOverride: ""
 
