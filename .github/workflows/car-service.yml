@@ -9,8 +9,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - ${{ env.IMAGE_NAME}}/**
-      - .github/workflows/${{ env.IMAGE_NAME}}.yml
+      -  car-service/**
+      - .github/workflows/car-service.yml
 
 jobs:
   build-and-push:

@@ -9,8 +9,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - ${{ env.IMAGE_NAME}}/**
-      - .github/workflows/${{ env.IMAGE_NAME}}.yml
+      - location-service/**
+      - .github/workflows/location-service.yml
 
 jobs:
   build-and-push:
