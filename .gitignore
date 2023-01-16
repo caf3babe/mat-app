@@ -30,5 +30,5 @@ hs_err_pid*
 **/mvnw
 
 **/target
-/*/helm/charts/mongodb-12.0.0.tgz
-/*/helm/Chart.lock
+**/charts/mongodb-*.tgz
+**/Chart.lock

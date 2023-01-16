@@ -50,3 +50,11 @@ env:
     value: "prod"
   - name: spring_cloud_config_uri
     value: http://configuration-service:8071
+
+mongodb:
+  service:
+  ports:
+    mongodb: 28084
+  auth:
+    rootPassword: example
+
