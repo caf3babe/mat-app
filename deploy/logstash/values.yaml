@@ -3,7 +3,6 @@ logstash:
   logstash.conf: |-
     input {
       tcp {
-        port => 5005
         codec => json_lines
       }
     }
@@ -19,6 +18,3 @@ logstash:
         hosts => "zipkin-elasticsearch-master:9200"
       }
     }
-  extraPorts:
-    - name: pipeline
-      containerPort: 5005

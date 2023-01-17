@@ -58,3 +58,5 @@ mongodb:
     mongodb: 28080
   auth:
     rootPassword: example
+  readinessProbe:
+    enabled: false
