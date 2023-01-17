@@ -90,10 +90,5 @@ env:
   
 mongodb:
   nameOverride: car-service-db
-  service:
-  ports:
-    mongodb: 28083
   auth:
     rootPassword: example
-  readinessProbe:
-    enabled: false

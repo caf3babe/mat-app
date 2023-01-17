@@ -9,8 +9,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - api-gateway/**
-      - .github/workflows/api-gateway.yml
+      - authentication-service/**
+      - .github/workflows/authentication-service.yml
 
 jobs:
   build-and-push:

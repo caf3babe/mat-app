@@ -1,0 +1,36 @@
+kube-prometheus-stack:
+  fullNameOverride: kube-prometheus-stack
+  global:
+    scrape_interval: 5s # Set the scrape interval to every 5 seconds.
+    evaluation_interval: 5s # Evaluate rules every 5 seconds.
+  scrape_configs:
+    - job_name: 'location-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-location-service:8082' ]
+  
+    - job_name: 'currency-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-currency-service:8080' ]
+  
+    - job_name: 'opening-hours-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-opening-hours-service:8081' ]
+  
+    - job_name: 'car-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-car-service:8083' ]
+  
+    - job_name: 'order-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-order-service:8084' ]
+  
+    - job_name: 'authentication-service'
+      metrics_path: '/actuator/prometheus'
+      static_configs:
+        - targets: [ 'car-rental-authentication-service:8085' ]
+  

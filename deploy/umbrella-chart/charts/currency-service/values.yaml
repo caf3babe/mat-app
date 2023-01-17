@@ -53,10 +53,5 @@ env:
 
 mongodb:
   nameOverride: currency-service-db
-  service:
-  ports:
-    mongodb: 28080
   auth:
     rootPassword: example
-  readinessProbe:
-    enabled: false

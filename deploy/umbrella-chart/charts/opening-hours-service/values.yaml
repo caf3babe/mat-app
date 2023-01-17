@@ -53,12 +53,7 @@ env:
 
 mongodb:
   nameOverride: opening-hours-service-db
-  service:
-  ports:
-    mongodb: 28081
   auth:
     rootPassword: example
-  readinessProbe:
-    enabled: false
 
     

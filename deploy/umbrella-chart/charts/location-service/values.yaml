@@ -53,10 +53,5 @@ env:
 
 mongodb:
   nameOverride: location-service-db
-  service:
-  ports:
-    mongodb: 28082
   auth:
     rootPassword: example
-  readinessProbe:
-    enabled: false

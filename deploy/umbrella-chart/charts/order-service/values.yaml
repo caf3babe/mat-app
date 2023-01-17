@@ -53,10 +53,5 @@ env:
 
 mongodb:
   nameOverride: order-service-db
-  service:
-  ports:
-    mongodb: 28084
   auth:
     rootPassword: example
-  readinessProbe:
-    enabled: false

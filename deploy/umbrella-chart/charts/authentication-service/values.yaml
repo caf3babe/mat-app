@@ -50,3 +50,8 @@ env:
     value: "prod"
   - name: spring_cloud_config_uri
     value: http://car-rental-configuration-service:8071
+
+mongodb:
+  nameOverride: authentication-service-db
+  auth:
+    rootPassword: example

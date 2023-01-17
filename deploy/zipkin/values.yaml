@@ -1,3 +1,24 @@
+zipkin:
+  elasticsearch: 
+    enabled: true
+    master:
+      replicas: 1
+      autoscaling:
+        minReplicas: 1
+        maxReplicas: 2
+    coordinating:
+      replicas: 1
+      autoscaling:
+        minReplicas: 1
+        maxReplicas: 2
+    data:
+      replicas: 1
+      autoscaling:
+        minReplicas: 1
+        maxReplicas: 2
+    ingest:
+      replicas: 1
+
 env:
 - name: STORAGE_TYPE
   value: elasticsearch
