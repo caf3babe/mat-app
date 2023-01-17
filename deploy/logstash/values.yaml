@@ -1,4 +1,5 @@
-logstashPipeline:
+logstash:
+  logstashPipeline:
   logstash.conf: |-
     input {
       tcp {
@@ -15,9 +16,9 @@ logstashPipeline:
 
     output {
       elasticsearch {
-        hosts => "elasticsearch-master:9200"
+        hosts => "zipkin-elasticsearch-master:9200"
       }
     }
-extraPorts:
-  - name: pipeline
-    containerPort: 5005
+  extraPorts:
+    - name: pipeline
+      containerPort: 5005

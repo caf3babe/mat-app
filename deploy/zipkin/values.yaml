@@ -1,0 +1,5 @@
+env:
+- name: STORAGE_TYPE
+  value: elasticsearch
+- name: ES_HOSTS
+  value: http://zipkin-elasticsearch-master:9300

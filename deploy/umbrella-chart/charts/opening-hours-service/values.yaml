@@ -52,6 +52,7 @@ env:
     value: http://car-rental-configuration-service:8071
 
 mongodb:
+  nameOverride: opening-hours-service-db
   service:
   ports:
     mongodb: 28081
