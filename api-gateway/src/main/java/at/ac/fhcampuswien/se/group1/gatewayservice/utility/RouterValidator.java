@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.se.group1.gatewayservice.utility;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -11,24 +12,10 @@ import java.util.function.Predicate;
 @Component
 public class RouterValidator {
 
-    public static final List<String> openApiEndpointsGet = List.of(
-            "/api/v1/car/**",
-            "/api/v1/car",
-            "/api/v1/car/findByStatus",
-            "/api/v1/currency",
-            "/api/v1/currency/**",
-            "/api/v1/opening-hours",
-            "/api/v1/opening-hours/**",
-            "/api/v1/location/**",
-            "/api/v1/location"
-    );
-
-    public static final List<String> openApiEndpointsPost= List.of(
-            "/api/v1/order",
-            "/api/v1/auth/admin",
-            "/api/v1/auth/order"
-
-    );
+    @Value("${gateway-config.secured-get-paths}")
+    private static List<String> openApiEndpointsGet;
+    @Value("${gateway-config.secured-post-paths}")
+    private static List<String> openApiEndpointsPost;
 
     public static final Predicate<ServerHttpRequest> isSecuredGet =
             request -> openApiEndpointsGet
@@ -41,5 +28,4 @@ public class RouterValidator {
                     .stream()
                     .noneMatch(uri -> request.getURI().getPath().contains(uri) && Objects.equals(request.getMethod(), HttpMethod.POST)
                     );
-
 }
