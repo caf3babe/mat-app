@@ -29,7 +29,7 @@ public class AuthenticationFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka("STORES", false);
+        InstanceInfo instance = discoveryClient.getNextServerFromEureka("CAR-SERVICE", false);
 
         log.info("manual discovery url: " + instance.getHomePageUrl());
 
