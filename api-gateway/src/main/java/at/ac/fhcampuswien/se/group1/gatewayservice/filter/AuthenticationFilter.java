@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.se.group1.gatewayservice.filter;
 import at.ac.fhcampuswien.se.group1.gatewayservice.utility.JwtUtil;
 import at.ac.fhcampuswien.se.group1.gatewayservice.utility.RouterValidator;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,10 +23,16 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticationFilter implements GatewayFilter {
 
+    private EurekaClient discoveryClient;
     private JwtUtil jwtUtil;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        InstanceInfo instance = discoveryClient.getNextServerFromEureka("STORES", false);
+
+        log.info("manual discovery url: " + instance.getHomePageUrl());
+
         ServerHttpRequest request = exchange.getRequest();
 
         log.info(request.getMethodValue() + ": " + request.getPath());
