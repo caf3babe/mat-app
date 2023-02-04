@@ -28,6 +28,8 @@ public class AuthenticationFilter implements GatewayFilter {
         ServerHttpRequest request = exchange.getRequest();
 
         log.info(request.getMethodValue() + ": " + request.getPath());
+        log.debug("SecuredGet: " + (RouterValidator.isSecuredGet.test(request) ? "true" : "false"));
+        log.debug("SecuredGet: " + (RouterValidator.isSecuredPost.test(request) ? "true" : "false"));
 
         if (RouterValidator.isSecuredGet.test(request) && RouterValidator.isSecuredPost.test(request)) {
 
@@ -42,6 +44,8 @@ public class AuthenticationFilter implements GatewayFilter {
                 return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
 
             this.populateRequestWithHeaders(exchange, jwt);
+        } else {
+            return this.onError(exchange, "Not secured", HttpStatus.UNAUTHORIZED);
         }
 
         return chain.filter(exchange);
