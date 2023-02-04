@@ -31,7 +31,7 @@ public class AuthenticationFilter implements GatewayFilter {
         log.info("SecuredGet: " + (RouterValidator.isSecuredGet.test(request) ? "true" : "false"));
         log.info("SecuredGet: " + (RouterValidator.isSecuredPost.test(request) ? "true" : "false"));
 
-        if (RouterValidator.isSecuredGet.test(request) && RouterValidator.isSecuredPost.test(request)) {
+        if (RouterValidator.isSecuredGet.test(request) || RouterValidator.isSecuredPost.test(request)) {
 
             if (this.isAuthMissing(request))
                 return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
