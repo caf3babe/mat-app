@@ -28,8 +28,8 @@ public class AuthenticationFilter implements GatewayFilter {
         ServerHttpRequest request = exchange.getRequest();
 
         log.info(request.getMethodValue() + ": " + request.getPath());
-        log.debug("SecuredGet: " + (RouterValidator.isSecuredGet.test(request) ? "true" : "false"));
-        log.debug("SecuredGet: " + (RouterValidator.isSecuredPost.test(request) ? "true" : "false"));
+        log.info("SecuredGet: " + (RouterValidator.isSecuredGet.test(request) ? "true" : "false"));
+        log.info("SecuredGet: " + (RouterValidator.isSecuredPost.test(request) ? "true" : "false"));
 
         if (RouterValidator.isSecuredGet.test(request) && RouterValidator.isSecuredPost.test(request)) {
 
