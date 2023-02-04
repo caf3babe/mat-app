@@ -29,24 +29,22 @@ public class AuthenticationFilter implements GatewayFilter {
 
         log.info(request.getMethodValue() + ": " + request.getPath());
 
-        log.info("SecuredGet: " + (RouterValidator.isSecuredGet.test(request) ? "true" : "false"));
-        log.info("SecuredPost: " + (RouterValidator.isSecuredPost.test(request) ? "true" : "false"));
+        log.info("Secured endpoint: " + (RouterValidator.isSecured.test(request) ? "true" : "false"));
 
-        if (RouterValidator.isSecuredGet.test(request) || RouterValidator.isSecuredPost.test(request)) {
-
-            if (this.isAuthMissing(request))
-                return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
+        if (RouterValidator.isSecured.test(request)) {
+            if (this.isAuthMissing(request)) return this.onError(
+                    exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
 
             final String token = this.getAuthHeader(request);
 
             String jwt = token.substring(7);
 
-            if (jwtUtil.isInvalid(jwt))
-                return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
+            if (jwtUtil.isInvalid(jwt)) return this.onError(
+                    exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
 
             this.populateRequestWithHeaders(exchange, jwt);
         } else {
-            log.info("Not auth configured on this path, letting pass.");
+            log.info("No auth configured on this path, letting pass.");
         }
 
         return chain.filter(exchange);
@@ -74,6 +72,5 @@ public class AuthenticationFilter implements GatewayFilter {
                 .header("username", decodedJWT.getClaim("username").asString())
                 .build();
     }
-
 }
 
