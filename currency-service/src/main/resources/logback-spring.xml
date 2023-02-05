@@ -7,7 +7,7 @@
             <destination>localhost:5005</destination>
         </springProfile>
         <springProfile name="prod">
-            <destination>logstash-logstash-headless.logging:9600</destination>
+            <destination>logstash-logstash.elastic:5000</destination>
         </springProfile>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
