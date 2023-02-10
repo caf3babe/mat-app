@@ -2,19 +2,26 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <springProperty scope="context" name="application_name" source="spring.application.name"/>
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <springProfile name="dev">
-            <destination>localhost:5005</destination>
-        </springProfile>
-        <springProfile name="prod">
-            <destination>logstash-logstash.elastic:5000</destination>
-        </springProfile>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    <springProperty scope="context" name="loki_base_url" source="app.loki.baseurl"/>
+    <springProperty scope="context" name="loki_log_level" source="app.loki.level"/>
+    <appender name="loki" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>${loki_base_url}</url>
+        </http>
+        <format>
+            <label>
+                <pattern>app=${application_name},host=${hostname},level=%level</pattern>
+            </label>
+            <message>
+                <pattern>l=%level h=${hostname} c=%logger{20} t=%thread | %msg %ex</pattern>
+            </message>
+            <sortByTime>true</sortByTime>
+        </format>
     </appender>
     <root level="INFO">
-        <appender-ref ref="logstash"/>
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="loki"/>
     </root>
+
     <logger name="org.springframework" level="INFO"/>
-    <logger name="com.optimagrowth" level="DEBUG"/>
 </configuration>

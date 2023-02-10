@@ -22,16 +22,10 @@ import reactor.core.publisher.Mono;
 @RefreshScope
 @Component
 public class AuthenticationFilter implements GatewayFilter {
-
-    private EurekaClient discoveryClient;
     private JwtUtil jwtUtil;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
-        InstanceInfo instance = discoveryClient.getNextServerFromEureka("CAR-SERVICE", false);
-
-        log.info("manual discovery url: " + instance.getHomePageUrl());
 
         ServerHttpRequest request = exchange.getRequest();
 

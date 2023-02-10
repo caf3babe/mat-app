@@ -1,0 +1,32 @@
+# used in logback-spring.xml
+app:
+  loki:
+    baseurl: http://localhost:3100/loki/api/v1/push
+    level: DEBUG
+queue:
+  car-available: CAR_AVAILABLE_QUEUE
+  car-unavailable: CAR_UNAVAILABLE_QUEUE
+  currency-convert-request: CURRENCY_CONVERT_REQUEST_QUEUE
+  order-create: ORDER_CREATE_QUEUE
+  order-status-failure: ORDER_STATUS_FAILURE_QUEUE
+  order-status-success: ORDER_STATUS_SUCCESS_QUEUE
+  order-update: ORDER_UPDATE_QUEUE
+  order-update-status: ORDER_UPDATE_STATUS_QUEUE
+server:
+  port: '8083'
+spring:
+  application:
+    name: car-service
+  cloud:
+    config:
+      uri: http://localhost:8071
+  mongodb:
+    embedded:
+      version: 3.5.5
+  profiles:
+    active: dev
+  sleuth:
+    sampler:
+      probability: '1.0'
+  zipkin:
+    base-url: http://localhost:9411

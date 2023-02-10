@@ -1,0 +1,16 @@
+management:
+  endpoint:
+    prometheus:
+      enabled: 'true'
+server:
+  port: '8071'
+spring:
+  application:
+    name: configuration-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/caf3babe/mat-app-config.git
+  profiles:
+    active: git

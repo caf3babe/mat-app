@@ -1,0 +1,18 @@
+# used in logback-spring.xml
+app:
+  loki:
+    baseurl: http://localhost:3100/loki/api/v1/push
+    level: DEBUG
+server:
+  port: '8070'
+spring:
+  application:
+    name: discovery-service
+  cloud:
+    config:
+      fail-fast: 'true'
+      retry:
+        max-attempts: '30'
+      uri: http://localhost:8071
+  profiles:
+    active: dev

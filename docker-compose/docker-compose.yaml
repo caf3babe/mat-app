@@ -1,77 +1,151 @@
-version: '3.1'
-
 services:
-
+  api-gateway:
+    build: ../api-gateway/.
+    container_name: api-service
+    ports:
+      - "8079:8079"
+  authentication-service:
+    build: ../authentication-service/.
+    container_name: authentication-service
+    ports:
+      - "8085:8085"
+  car-service:
+    build: ../car-service/.
+    container_name: car-service
+    ports:
+      - "8083:8083"
+  cardatabase:
+    container_name: car-database
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: root
+    image: mongo:5.0
+    ports:
+      - "28083:27017"
+    restart: always
   configurationservice:
     build: ../configuration-service/.
+    container_name: configuration-service
     ports:
       - "8071:8071"
-    container_name: configuration-service
-
+  currency-service:
+    build: ../currency-service/.
+    container_name: currency-service
+    ports:
+      - "8080:8080"
+  currencydatabase:
+    container_name: currency-database
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: root
+    image: mongo:5.0
+    ports:
+      - "28080:27017"
+    restart: always
   discoveryservice:
     build: ../discovery-service/.
-    ports:
-      - "8070:8070"
+    container_name: discovery-service
     depends_on:
       - configurationservice
     environment:
+      CONFIGSERVER_PORT: "8071"
+      CONFIGSERVER_URI: "http://configurationservice:8071"
       PROFILE: "dev"
       SERVER_PORT: "8070"
-      CONFIGSERVER_URI: "http://configurationservice:8071"
-      CONFIGSERVER_PORT: "8071"
-    container_name: discovery-service
-
-  currencydatabase:
-    image: mongo:5.0
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "28080:27017"
-    container_name: currency-database
-
-  openinghoursdatabase:
-    image: mongo:5.0
-    restart: always
+      - "8070:8070"
+  elasticsearch:
+    container_name: elasticsearch
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.1
     ports:
-      - "28081:27017"
-    container_name: opening-hours-database
-
+      # Cluster communication port
+      - "9300:9300"
+      # REST communication port
+      - "9200:9200"
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+  grafana:
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+  kibana:
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    image: docker.elastic.co/kibana/kibana:8.6.1
+    ports:
+      - "5601:5601"
+  location-service:
+    build: ../location-service/.
+    container_name: location-service
+    ports:
+      - "8082:8082"
   locationdatabase:
-    image: mongo:5.0
-    restart: always
+    container_name: location-database
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: root
+    image: mongo:5.0
     ports:
       - "28082:27017"
-    container_name: location-database
-
-  cardatabase:
-    image: mongo:5.0
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+  logstash:
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:8.6.1
     ports:
-      - "28083:27017"
-    container_name: car-database
-
-  orderdatabase:
-    image: mongo:5.0
-    restart: always
+      - "5005:5005"
+    volumes:
+      - ./logstash:/etc/logstash/conf.d
+  opening-hours-service:
+    build: ../opening-hours-service/.
+    container_name: opening-hours-service
+    ports:
+      - "8081:8081"
+  openinghoursdatabase:
+    container_name: opening-hours-database
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: root
+    image: mongo:5.0
+    ports:
+      - "28081:27017"
+    restart: always
+  order-service:
+    build: ../order-service/.
+    container_name: order-service
+    ports:
+      - "8084:8084"
+  orderdatabase:
+    container_name: order-database
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: root
+    image: mongo:5.0
     ports:
       - "28084:27017"
-    container_name: order-database
-
+    restart: always
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3-management
     ports:
       # AMQP protocol port
@@ -81,104 +155,14 @@ services:
     volumes:
       - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
-
-    container_name: rabbitmq
-
-  elasticsearch:
-    image:  docker.elastic.co/elasticsearch/elasticsearch:8.6.1
-    environment:
-      - node.name=elasticsearch
-      - discovery.type=single-node
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    ports:
-      # Cluster communication port
-      - "9300:9300"
-      # REST communication port
-      - "9200:9200"
-    container_name: elasticsearch
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.6.1
-    environment:
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
-    ports:
-      - "5601:5601"
-    container_name: kibana
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.6.1
-    container_name: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./logstash:/etc/logstash/conf.d
-    ports:
-      - "5005:5005"
   zipkin:
-    image: openzipkin/zipkin
     container_name: zipkin
     depends_on:
       - elasticsearch
     environment:
       - STORAGE_TYPE=elasticsearch
       - ES_HOSTS=elasticsearch:9300
+    image: openzipkin/zipkin
     ports:
       - "9411:9411"
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    container_name: prometheus
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=password
-    container_name: grafana
-
-  currency-service:
-    build: ../currency-service/.
-    ports:
-      - "8080:8080"
-    container_name: currency-service
-  opening-hours-service:
-    build: ../opening-hours-service/.
-    container_name: opening-hours-service
-    ports:
-      - "8081:8081"
-  location-service:
-    build: ../location-service/.
-    container_name: location-service
-    ports:
-      - "8082:8082"
-  car-service:
-    build: ../car-service/.
-    container_name: car-service
-    ports:
-      - "8083:8083"
-  order-service:
-    build: ../order-service/.
-    container_name: order-service
-    ports:
-      - "8084:8084"
-  authentication-service:
-    build: ../authentication-service/.
-    container_name: authentication-service
-    ports:
-      - "8085:8085"
-  api-gateway:
-    build: ../api-gateway/.
-    container_name: api-service
-    ports:
-      - "8079:8079"
+version: '3.1'

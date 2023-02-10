@@ -1,16 +1,39 @@
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: DEBUG
+#    reactor.netty.http.client: DEBUG
+car-rental-app:
+  admin:
+    email: admin
+    password: admin123
+  jwt-secret: sWDXQcubDCnNsll7DoE6s9H2idu/oQoZQJ0eVoRZCN1uLuWE2SCXd3jPdyu3tIBp
+eureka:
+  client:
+    enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,loggers
+server:
+  port: 8079
 spring:
-  config:
-    location: http://localhost:8071
   application:
     name: api-gateway
-  profiles:
-    active: dev
   cloud:
+    config:
+      enabled: false
+      fail-fast: true
+      retry:
+        max-attempts: 30
+      uri: http://localhost:8071
     gateway:
+      discovery.locator:
+        enabled: true
+        lowerCaseServiceId: true
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods:
               - GET
@@ -18,23 +41,12 @@ spring:
               - PUT
               - DELETE
               - OPTION
-      discovery.locator:
-        enabled: true
-        lowerCaseServiceId: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: gateway,prometheus
-  endpoint:
-    health:
-      probes:
-        enabled: true
-server:
-  port: 8079
-
-#logging:
-#  level:
-#    org.springframework.cloud.gateway: DEBUG
-#    reactor.netty.http.client: DEBUG
+            allowedOrigins: "*"
+  profiles:
+    active: dev
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: false
