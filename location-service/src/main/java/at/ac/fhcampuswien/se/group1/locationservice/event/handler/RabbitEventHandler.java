@@ -22,7 +22,7 @@ public class RabbitEventHandler {
     private ObjectMapper mapper;
     private final TransactionIdentifier transactionId;
 
-    @RabbitListener(queues = {"${queue.location-rejected}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.location-rejected}"})
     public void handleOrderRejected(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling a reject location event {}", payload);
@@ -32,7 +32,7 @@ public class RabbitEventHandler {
         locationService.rejectLocation(event.getLocation());
     }
 
-    @RabbitListener(queues = {"${queue.location-finished}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.location-finished}"})
     public void handleLocationDoneEvent(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling a location finished event {}", payload);
@@ -43,7 +43,7 @@ public class RabbitEventHandler {
 
     }
 
-    @RabbitListener(queues = {"${queue.car-available}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.car-available}"})
     public void handleCarAvailable(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling an car available event {}", payload);

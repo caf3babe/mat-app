@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class CurrencyConvertHandler {
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper objectMapper;
-    @Value("${queue.currency-convert-request}") String queue;
+    @Value("${app.rabbitmq.queues.currency-convert-request}") String queue;
     
     public Double convert(CurrencySymbol inCurrencySymbol, Double price, CurrencySymbol outCurrencySymbol)
             throws JsonProcessingException {

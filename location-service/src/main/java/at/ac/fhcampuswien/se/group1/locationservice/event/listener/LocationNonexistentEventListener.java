@@ -20,7 +20,7 @@ public class LocationNonexistentEventListener {
     private final ObjectMapper mapper;
 
     public LocationNonexistentEventListener(RabbitTemplate rabbitTemplate,
-                                 @Value("${queue.location-nonexistent}") String queueLocationNonexistent, ObjectMapper mapper) {
+                                 @Value("${app.rabbitmq.queues.location-nonexistent}") String queueLocationNonexistent, ObjectMapper mapper) {
 
         this.rabbitTemplate = rabbitTemplate;
         this.queueLocationNonexistent = queueLocationNonexistent;

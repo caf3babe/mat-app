@@ -20,7 +20,7 @@ public class LocationExistentEventListener {
     private final ObjectMapper mapper;
 
     public LocationExistentEventListener(RabbitTemplate rabbitTemplate,
-                                 @Value("${queue.location-existent}") String queueLocationExistent, ObjectMapper mapper) {
+                                 @Value("${app.rabbitmq.queues.location-existent}") String queueLocationExistent, ObjectMapper mapper) {
 
         this.rabbitTemplate = rabbitTemplate;
         this.queueLocationExistent = queueLocationExistent;

@@ -20,7 +20,7 @@ public class OrderStatusFailureEventListener {
     private final ObjectMapper mapper;
 
     public OrderStatusFailureEventListener(RabbitTemplate rabbitTemplate,
-                                     @Value("${queue.order-status-failure}") String queueOrderStatusFailure, ObjectMapper mapper) {
+                                     @Value("${app.rabbitmq.queues.order-status-failure}") String queueOrderStatusFailure, ObjectMapper mapper) {
 
         this.rabbitTemplate = rabbitTemplate;
         this.queueOrderStatusFailure = queueOrderStatusFailure;

@@ -20,7 +20,7 @@ public class RejectedEventListener {
     private final ObjectMapper mapper;
     
     public RejectedEventListener(RabbitTemplate rabbitTemplate,
-                                 @Value("${queue.location-rejected}") String queueLocationRejected,
+                                 @Value("${app.rabbitmq.queues.location-rejected}") String queueLocationRejected,
                                  ObjectMapper mapper) {
         
         this.rabbitTemplate = rabbitTemplate;

@@ -24,7 +24,7 @@ public class OrderCreateOrUpdateEventHandler {
     private final TransactionIdentifier transactionId;
     
     @Transactional
-    @RabbitListener(queues = {"${queue.order-create}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.order-create}"})
     public void handleOrderCreate(@Payload String payload) throws JsonProcessingException {
         
         log.info("Handling an order create event {}", payload);
@@ -37,7 +37,7 @@ public class OrderCreateOrUpdateEventHandler {
     }
 
     @Transactional
-    @RabbitListener(queues = {"${queue.order-update}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.order-update}"})
     public void handleOrderUpdate(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling an order update event {}", payload);
@@ -51,7 +51,7 @@ public class OrderCreateOrUpdateEventHandler {
 
 
     @Transactional
-    @RabbitListener(queues = {"${queue.order-update-status}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.order-update-status}"})
     public void handleOrderUpdateStatus(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling an order update status event {}", payload);

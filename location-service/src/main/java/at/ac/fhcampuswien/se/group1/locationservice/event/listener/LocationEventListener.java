@@ -20,7 +20,7 @@ public class LocationEventListener {
     private final ObjectMapper mapper;
     
     public LocationEventListener(RabbitTemplate rabbitTemplate,
-                                 @Value("${queue.location-created}") String queueLocationCreated, ObjectMapper mapper) {
+                                 @Value("${app.rabbitmq.queues.location-created}") String queueLocationCreated, ObjectMapper mapper) {
         
         this.rabbitTemplate = rabbitTemplate;
         this.queueLocationCreated = queueLocationCreated;

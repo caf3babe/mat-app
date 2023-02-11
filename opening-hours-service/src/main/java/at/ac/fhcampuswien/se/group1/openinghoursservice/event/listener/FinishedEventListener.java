@@ -20,7 +20,7 @@ public class FinishedEventListener {
     private final ObjectMapper mapper;
     
     public FinishedEventListener(RabbitTemplate rabbitTemplate,
-                                 @Value("${queue.location-finished}") String queueLocationFinished,
+                                 @Value("${app.rabbitmq.queues.location-finished}") String queueLocationFinished,
                                  ObjectMapper mapper) {
         
         this.rabbitTemplate = rabbitTemplate;

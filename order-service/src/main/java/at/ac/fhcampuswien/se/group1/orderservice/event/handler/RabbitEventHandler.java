@@ -22,7 +22,7 @@ public class RabbitEventHandler {
     
     private ObjectMapper mapper;
     
-    @RabbitListener(queues = {"${queue.car-unavailable}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.car-unavailable}"})
     public void handleCarUnavailableEvent(@Payload String payload) throws JsonProcessingException {
         
         log.info("Handling a car unavailable event {}", payload);
@@ -34,7 +34,7 @@ public class RabbitEventHandler {
         
     }
 
-    @RabbitListener(queues = {"${queue.location-nonexistent}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.location-nonexistent}"})
     public void handleLocationNonexistentEvent(@Payload String payload) throws JsonProcessingException {
         
         log.info("Handling a location nonexistent event {}", payload);
@@ -45,7 +45,7 @@ public class RabbitEventHandler {
         
     }
     
-    @RabbitListener(queues = {"${queue.location-existent}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.location-existent}"})
     public void handleLocationExistentEvent(@Payload String payload) throws JsonProcessingException {
         
         log.info("Handling a location existent event {}", payload);
@@ -56,7 +56,7 @@ public class RabbitEventHandler {
         
     }
 
-    @RabbitListener(queues = {"${queue.order-status-failure}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.order-status-failure}"})
     public void handleOrderStatusFailureEvent(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling a order status failure event {}", payload);
@@ -67,7 +67,7 @@ public class RabbitEventHandler {
 
     }
 
-    @RabbitListener(queues = {"${queue.order-status-success}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.order-status-success}"})
     public void handleOrderStatusSuccessEvent(@Payload String payload) throws JsonProcessingException {
 
         log.info("Handling a order status success event {}", payload);

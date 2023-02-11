@@ -1,0 +1,32 @@
+app:
+  rabbitmq:
+    queues:
+      car-available: CAR_AVAILABLE_QUEUE
+      location-created: LOCATION_CREATED_QUEUE
+      location-existent: LOCATION_EXISTENT_QUEUE
+      location-finished: LOCATION_FINISHED_QUEUE
+      location-nonexistent: LOCATION_NONEXISTENT_QUEUE
+      location-rejected: LOCATION_REJECTED_QUEUE
+server:
+  port: '8082'
+spring:
+  application:
+    name: location-service
+  cloud:
+    config:
+      fail-fast: 'true'
+      retry:
+        max-attempts: '30'
+      uri: http://localhost:8071
+  profiles:
+    active: dev
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: '5672'
+    username: guest
+  sleuth:
+    sampler:
+      probability: '1.0'
+  zipkin:
+    base-url: http://localhost:9411

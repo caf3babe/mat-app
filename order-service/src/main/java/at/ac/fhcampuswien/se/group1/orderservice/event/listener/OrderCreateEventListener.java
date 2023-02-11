@@ -20,7 +20,7 @@ public class OrderCreateEventListener {
     private final ObjectMapper mapper;
     
     public OrderCreateEventListener(RabbitTemplate rabbitTemplate,
-                                    @Value("${queue.order-create}") String queueOrderCreate, ObjectMapper mapper) {
+                                    @Value("${app.rabbitmq.queues.order-create}") String queueOrderCreate, ObjectMapper mapper) {
         
         this.rabbitTemplate = rabbitTemplate;
         this.queueOrderCreate = queueOrderCreate;

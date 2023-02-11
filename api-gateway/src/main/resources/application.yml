@@ -7,14 +7,11 @@ car-rental-app:
     email: admin
     password: admin123
   jwt-secret: sWDXQcubDCnNsll7DoE6s9H2idu/oQoZQJ0eVoRZCN1uLuWE2SCXd3jPdyu3tIBp
+
 eureka:
   client:
     enabled: false
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,loggers
+
 server:
   port: 8079
 spring:

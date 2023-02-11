@@ -21,7 +21,7 @@ public class CurrencyConvertRequestEventHandler {
     private final RabbitTemplate rabbitTemplate;
     private final ObjectMapper mapper;
     
-    @RabbitListener(queues = {"${queue.currency-convert-request}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.currency-convert-request}"})
     public Double handleCurrencyConvertRequest(@Payload String payload) {
         log.info("Handling a Currency Convert Request {}", payload);
         

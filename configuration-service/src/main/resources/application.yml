@@ -1,9 +1,6 @@
-management:
-  endpoint:
-    prometheus:
-      enabled: 'true'
 server:
   port: '8071'
+
 spring:
   application:
     name: configuration-service

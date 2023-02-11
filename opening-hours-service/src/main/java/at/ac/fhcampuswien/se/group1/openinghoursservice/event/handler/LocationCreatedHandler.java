@@ -20,7 +20,7 @@ public class LocationCreatedHandler {
     private final OpeningHoursService openingHoursService;
     private final TransactionIdentifier transactionIdentifier;
     
-    @RabbitListener(queues = {"${queue.location-created}"})
+    @RabbitListener(queues = {"${app.rabbitmq.queues.location-created}"})
     public void handle(@Payload String payload) throws JsonProcessingException {
         
         log.info("Handling a created location event {}", payload);

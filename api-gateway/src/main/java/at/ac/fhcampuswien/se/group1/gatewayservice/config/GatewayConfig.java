@@ -8,13 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GatewayConfig {
-
     AuthenticationFilter filter;
-
     public GatewayConfig(AuthenticationFilter filter) {
         this.filter = filter;
     }
-
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()

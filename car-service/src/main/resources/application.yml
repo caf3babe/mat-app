@@ -1,0 +1,18 @@
+app:
+  rabbitmq:
+    queues:
+      car-available: CAR_AVAILABLE_QUEUE
+      car-unavailable: CAR_UNAVAILABLE_QUEUE
+      currency-convert-request: CURRENCY_CONVERT_REQUEST_QUEUE
+      order-create: ORDER_CREATE_QUEUE
+      order-status-failure: ORDER_STATUS_FAILURE_QUEUE
+      order-status-success: ORDER_STATUS_SUCCESS_QUEUE
+      order-update: ORDER_UPDATE_QUEUE
+      order-update-status: ORDER_UPDATE_STATUS_QUEUE
+
+spring:
+  sleuth:
+    sampler:
+      probability: '1.0'
+  zipkin:
+    base-url: http://localhost:9411

@@ -20,7 +20,7 @@ public class CarUnavailableEventListener {
     private final ObjectMapper mapper;
 
     public CarUnavailableEventListener(RabbitTemplate rabbitTemplate,
-                                     @Value("${queue.car-unavailable}") String queueCarUnavailable, ObjectMapper mapper) {
+                                     @Value("${app.rabbitmq.queues.car-unavailable}") String queueCarUnavailable, ObjectMapper mapper) {
 
         this.rabbitTemplate = rabbitTemplate;
         this.queueCarUnavailable = queueCarUnavailable;
