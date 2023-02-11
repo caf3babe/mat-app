@@ -26,9 +26,6 @@ server:
 spring:
   application:
     name: car-service
-  cloud:
-    config:
-      enabled: false
   profiles:
     active: dev
 
