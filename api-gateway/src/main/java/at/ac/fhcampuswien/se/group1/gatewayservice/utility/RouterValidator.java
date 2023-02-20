@@ -26,6 +26,6 @@ public class RouterValidator {
     public static final Predicate<ServerHttpRequest> isSecured =
             request -> unsecuredApiEndpoints
                     .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri) && Objects.equals(request.getMethod(), HttpMethod.GET)
+                    .noneMatch(uri -> request.getURI().getPath().contains(uri)
                     );
 }
