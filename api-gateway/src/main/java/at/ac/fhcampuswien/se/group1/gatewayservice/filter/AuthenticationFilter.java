@@ -47,6 +47,7 @@ public class AuthenticationFilter implements GatewayFilter {
             this.populateRequestWithHeaders(exchange, jwt);
         } else {
             log.info("No auth configured on this path, letting pass.");
+            log.info("Welcome to car rental :D");
         }
 
         return chain.filter(exchange);
